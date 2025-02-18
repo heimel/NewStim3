@@ -7,6 +7,8 @@ function runexperiment(figureNum, record)
 %  the
 %  figure is totally cleared by this routine.
 %
+%  Depends on InVivoTools (github.com/heimel/InVivoTools)
+%
 % 2000-2003 Steve VanHooser
 % 2004-2021 Alexander Heimel
 %

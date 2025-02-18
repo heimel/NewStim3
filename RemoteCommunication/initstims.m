@@ -7,7 +7,7 @@
 %   mount any other necessary computers
 %
 % 200X, Steve Van Hooser
-% 200X-2020, Alexander Heimel
+% 200X-2025, Alexander Heimel
 
 close all
 NewStimGlobals
@@ -69,7 +69,7 @@ end
 switch Remote_Comm_method
     case 'filesystem'
         try
-            logmsg('Waiting for remote commands...press Ctrl-C to interrupt.');
+            logmsg('Waiting for remote commands...press Ctrl-C to interrupt. Type sca at the prompt to close stimulus screen.');
             
             while 1  % needs control-C to exit
                 pause(0.05);
@@ -111,7 +111,7 @@ switch Remote_Comm_method
                     if exist('toremote.mat','file')
                         delete('toremote.mat');
                     end
-                    logmsg('Waiting for remote commands...press Ctrl-C to interrupt.');
+                    logmsg('Waiting for remote commands...press Ctrl-C to interrupt.  Type sca at the prompt to close stimulus screen.');
                     pause(1);
                 end
             end
@@ -140,7 +140,8 @@ switch Remote_Comm_method
                 error(['Could not open socket on port ' int2str(Remote_Comm_port) '.']);
             end
             fprintf('Received remote connection, awaiting commands.\n');
-            scriptdone = 0; errorflag = 0;
+            scriptdone = 0; 
+            errorflag = 0;
             tic;
             while ~scriptdone
                 t = toc;
@@ -154,7 +155,7 @@ switch Remote_Comm_method
                     scriptdone = 1;
                 elseif length(str)>=12 && strcmp(str(1:12),'RECEIVE FILE')
                     fprintf('Preparing to receive file.\n');
-                    [B,dum1,dum2,ind]=sscanf(str,'RECEIVE FILE %d',1);
+                    [B,~,~,ind]=sscanf(str,'RECEIVE FILE %d',1);
                     recvname = str(ind+1:end);
                     pnet(Remote_Comm_conn,'readtofile',recvname,B);
                     tic;

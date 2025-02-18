@@ -1,11 +1,14 @@
-function NewStimConfiguration
-
+function NewStimConfiguration()
 % NewStimConfiguration.m
 %
 %  A user-specific configuration file which contains calibration code
 %  for a specific machine and monitor.  Read each line of code and its comments
 %  in order to set each parameter.
 %
+%  NewStimConfiguration is initially copied from NewStimConfiguration_analysiscomputer.m
+%
+% 200X, Steve Van Hooser
+% 200X-2025, Alexander Heimel
 
 NewStimGlobals;
 
@@ -67,7 +70,7 @@ Remote_Comm_remoteprefix = '/mnt/THISHOSTNAME/data';
 StimWindowGlobals;
 StimWindowMonitor = 0;  % use the given monitor, 0 is first
 StimComputer = 1;       % is this a stimulus computer?
-StimDebug = false;      % do you want to show stimuli in 640x480 window
+StimDebug = true;      % do you want to show stimuli in 640x480 window, for an experimental computer change to false
 
 StimWindowUseCLUTMapping = 0; % most users will say 0
 
@@ -123,7 +126,7 @@ LoadGammaCorrectionTable('gct_linear.txt');
 % port) and 'rts' (pin 7 of DE-9 port, or pin 4 of DB-25 port)
 
 StimSerialGlobals; % see help file for description
-StimSerialSerialPort = 1;          % do you want to enable this feature?
+StimSerialSerialPort = 0;          % do you want to enable this feature?
 StimSerialScriptIn = '/dev/ttyS0';       % NewStim flips ScriptOutPin on this port when trial starts
 StimSerialScriptInPin = 'dtr';       % flips this pin when trial starts
 StimSerialScriptOut = '/dev/ttyS0';     % same
@@ -134,7 +137,7 @@ StimSerialStimOut = '/dev/ttyS0';% same
 StimSerialStimOutPin = 'dtr';% same
 
 % Display preferences
-NSUseInitialSerialTrigger = 1;
+NSUseInitialSerialTrigger = 0;
 NSUseStimSerialTrigger = 0;
 
 StimDisplayOrderRemote = 0;

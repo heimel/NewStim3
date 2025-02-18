@@ -42,6 +42,10 @@ NewStimGlobals;
 NewStimStimList = {};
 NewStimStimScriptList = {};
 
+if ~exist('load_invivotools','file')
+    warning('Make sure that InVivoTools is installed and in the path. Essential functions might be missing otherwise.')
+end
+
 if exist('NewStimConfiguration','file')
     NewStimConfiguration;
 end
