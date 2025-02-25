@@ -36,7 +36,7 @@ if A
     if ~any(StimWindowMonitor==screens)
         error(['Available screens are ' ...
             mat2str(screens) ' but StimWindowMonitor is ' ...
-            int2str(StimWindowMonitor) '. Perhaps the stimulus monitor is not on?']);
+            int2str(StimWindowMonitor) '. Perhaps the stimulus monitor is not on? Otherwise change StimWindowMonitor in NewStimConfiguration.']);
     end
     try
         StimWindowPreviousCLUT = Screen('ReadNormalizedGammaTable',StimWindowMonitor);

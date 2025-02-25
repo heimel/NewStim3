@@ -1,22 +1,23 @@
-function st = loomingstimsven( params, oldstim )
-%SVENSTIM stimulus to show bitmaps moving in real world
+function st = loomingstim( params, oldstim )
+%loomingstim. NewStim3 stimulus to show looming bitmaps
 %
 % 2014, Azadeh Tafreshiha, Alexander Heimel
+% 2025, Alexander Heimel, Huaxing Ou
 
 if nargin<2
     oldstim = [];
 end
 
+% Default parameters from Yang, Xing, et al. "A simple threat-detection strategy in mice." BMC biology 18 (2020): 1-11.
 default.filename = 'large_circle.png';
-% default.center_r2n_cm = [0 0]; % position of object center in cm relative to nose%
-default.velocity_cmps = [0 0 36]; % vx,vy,vz in cm/s, right and up and away are positive
-default.expansiontime = 0.250;
-default.statictime = 0.250;
-default.extent_degree = [2 2 0]; % extent in real world in degree
-default.n_repetitions = 15;
-default.expanded_diameter = 20;
+default.expansion_time = 0.75;
+default.static_time = 0.250;
+default.extent_deg = [0 0 0]; % initial width and height in degree
+default.n_repetitions = 5;
+default.expanded_diameter_deg = 30;
+default.inter_looming_time = 0.5;
 default.backdrop = [0.5 0.5 0.5];
-default.dispprefs = '{''BGpretime'',3}';
+default.dispprefs = '{''BGpretime'',0}';
 if isempty(oldstim)
     oldstimpar = default;
 else
@@ -40,7 +41,6 @@ end
 if ischar(params.dispprefs) % str to cell
     params.dispprefs = eval(params.dispprefs);
 end
-
 
 NewStimListAdd(mfilename);
 s = stimulus(5);
