@@ -38,7 +38,7 @@ for current_cycle = 1:params.n_repetitions
     
     for current_frame = 1:n_frames
      
-        if current_frame < n_frames_expansion
+        if current_frame <= n_frames_expansion
             topleft_pxl_x = topleft_pxl_x - pxlvelocity;
             topleft_pxl_y = topleft_pxl_y - pxlvelocity;
             bottomright_pxl_x = bottomright_pxl_x + pxlvelocity;
