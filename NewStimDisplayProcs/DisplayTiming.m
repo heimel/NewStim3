@@ -74,7 +74,12 @@ StimWindowGlobals;
 NewStimGlobals;
 GammaCorrectionTableGlobals;
 StimWindow
-currLut = Screen('ReadNormalizedGammaTable', StimWindow);
+
+try
+    currLut = Screen('ReadNormalizedGammaTable', StimWindow);
+catch me
+    error('PsychToolbox could not read gamma table. Try to change StimWindowMonitor in NewStimConfiguration.')
+end
 
 dispOrder = getDisplayOrder(stimScript);
 

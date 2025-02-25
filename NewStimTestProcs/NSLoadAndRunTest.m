@@ -11,7 +11,12 @@ end
 NewStimGlobals;
 StimWindowGlobals;
 
-currLut = Screen('ReadNormalizedGammaTable', StimWindowMonitor);
+try
+    currLut = Screen('ReadNormalizedGammaTable', StimWindowMonitor);
+catch me
+    error('PsychToolbox could not read gamma table. Try to change StimWindowMonitor in NewStimConfiguration.')
+end
+
 mypriority = MaxPriority(StimWindowMonitor,'WaitBlanking','SetClut','GetSecs'); % PD
 
 
