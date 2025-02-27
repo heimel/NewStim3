@@ -47,7 +47,7 @@ for current_cycle = 1:params.n_repetitions
             bottomright_pxl = [bottomright_pxl_x bottomright_pxl_y];
         end
         
-        image_rect =[ topleft_pxl bottomright_pxl];
+        image_rect = round([ topleft_pxl bottomright_pxl]);
         Screen('DrawTexture', StimWindow, my_texture, [], image_rect);
        
         stamp = Screen('Flip', StimWindow, stamp+0.5/StimWindowRefresh);
