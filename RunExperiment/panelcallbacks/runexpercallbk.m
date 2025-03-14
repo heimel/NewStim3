@@ -57,7 +57,22 @@ switch action
             set(h.rssb,'enable','off');
         end
     case 'showstim'
+        from_acqready = get(h.from_acqready_cb,'value'); % get datapath from acqReady
         saveWaves = get(h.savestims,'value');  % are we acquiring here or just displaying?
+        
+        if from_acqready 
+            remotecommglobals;
+            acqready = fullfile(Remote_Comm_dir,'acqReady');
+            if exist(acqready,'file')
+                fid = fopen(acqready,'r');
+                fgetl(fid); % pathSpec line
+                datapath = fgetl(fid);
+                fclose(fid);
+                set(h.datapath,'String',datapath);
+            end
+        end
+
+
         if saveWaves  % make a new test directory if necessary
             runexpercallbk('datapath',fig);
             ntd = newtestdir(h.cksds);
@@ -86,7 +101,7 @@ switch action
             return
         end
         remPath = get(h.remotepath,'String');
-        if saveWaves && exist(datapath,'dir') && isempty(strfind(lower(datapath),'antigua'))
+        if saveWaves && exist(datapath,'dir') 
             errormsg('Directory already exists.');
             return
         elseif saveWaves  % otherwise, if we are saving, write the acquisition commands
@@ -102,13 +117,17 @@ switch action
             else
                 logmsg('Empty acquisition list');
             end
-            write_pathfile(fullfile(Remote_Comm_dir,'acqReady'),localpath2remote(datapath));
+            if ~from_acqready
+                % write acqReady
+                write_pathfile(fullfile(Remote_Comm_dir,'acqReady'),localpath2remote(datapath));
+            end
         end
-        bbb=evalin('base',['exist(''' scriptName ''')']);
+
+        bbb = evalin('base',['exist(''' scriptName ''')']);
         if bbb % if script also exists locally, show the duration time in RunExperiment window
-            durr=evalin('base',['duration(' scriptName ')']);
-            durrh=fix(durr/3600); durr=durr-3600*durrh;
-            durrm=fix(durr/60);durr=durr-60*durrm; durrs=fix(durr);
+            durr = evalin('base',['duration(' scriptName ')']);
+            durrh = fix(durr/3600); durr=durr-3600*durrh;
+            durrm = fix(durr/60);durr=durr-60*durrm; durrs=fix(durr);
             set(h.ctdwn,'String',['Script duration: ' sprintf('%.2d',durrh) ':' ...
                 sprintf('%.2d',durrm) ':' sprintf('%.2d',durrs) '; Started at '  datestr(now,13) '.']);
         end

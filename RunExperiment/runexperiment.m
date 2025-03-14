@@ -39,7 +39,7 @@ if nargin<2
     record.date = datestr(now,'yyyy-mm-dd');
     record.setup = host;
 end
-InVivoDataPathRem =  experimentpath(record,true,true);
+InVivoDataPathRem =  experimentpath(record,false,true);
 
 InVivoRemoteDirPath = Remote_Comm_dir;
 
@@ -62,7 +62,7 @@ SaveDir = 't00001';
 %es = 0000;
 
 
-figheight = 530;
+figheight = 600;
 figwidth = 430;
 figleft = 381;
 screensize = get(0,'ScreenSize');
@@ -103,7 +103,7 @@ cb.Style = 'Checkbox';
 cb.Callback = 'genercallback';
 
 % set up frame for data and analysis directories
-panel_height = 0.14;
+panel_height = 0.18;
 hpathpanel = uipanel('Title','Data','Position',[panel_left panel_top-panel_height panel_width panel_height ],'Units','pixels','backgroundcolor',[0.8 0.8 0.8]);
 panel_top = panel_top - panel_height - panel_vmargin;  
 
@@ -117,8 +117,14 @@ guicreate(txt,'string','Trial:','parent',hpathpanel,'move','right','left','left'
 dpt  = guicreate(edt,'String',SaveDir,'width',300,...
 	'Tag','SaveDirEdit','parent',hpathpanel,'fontsize',9);
 
+% acquire data button
+from_acqready_cb = guicreate(cb,'string','From acqReady','parent',hpathpanel,'width',160, ...
+    'Value',true,'Tag','PathFromAcqReadyCB','move','down');
+
+
+
 % frame with NewStimGlobals
-panel_height = 0.11;
+panel_height = 0.10;
 hglobalspanel = uipanel('Title','Screen','Position',[panel_left panel_top-panel_height panel_width panel_height ],'Units','pixels','backgroundcolor',[0.8 0.8 0.8]);
 panel_top = panel_top - panel_height - panel_vmargin;  
 
@@ -134,7 +140,7 @@ ap=[];
 
 %%%%
 % Acquisition list
-panel_height = 0.19;
+panel_height = 0.18;
 acq_frame = uipanel('Title','Acquisition list', ...
 		'Position',[panel_left panel_top-panel_height panel_width panel_height ],'Units','pixels','backgroundcolor',[0.8 0.8 0.8]);
 panel_top = panel_top - panel_height - panel_vmargin;  
@@ -218,13 +224,13 @@ rssb = guicreate(button,'string','Show script','parent',hstimpanel,'width','auto
 swvs = guicreate(cb,'string','Acquire','parent',hstimpanel,'width',80, ...
     'Tag','AcquireDataCB','move','right');
 
-rss=[];
+rss = [];
 
 rslb = guicreate(listbox,'string',{},'parent',hstimpanel,'top',100,'left',230,'width',180, ...
     'Callback','runexpercallbk EnDis',...
     'Tag','scriptlist','move','right','backgroundcolor',[1 1 1]);
 
-panel_height = 0.23;
+panel_height = 0.22;
 panel_width = panel_width/2 - 0.01;
 extdevframe = uipanel('Title','Commands and devices', ...
 		'Position',[panel_left panel_top-panel_height panel_width panel_height ],'Units','pixels','backgroundcolor',[0.8 0.8 0.8]);
@@ -275,21 +281,10 @@ newpsstim = guicreate(button,'string','PS','parent',toolsframe,'width','auto', .
 newsgstim = guicreate(button,'string','SG','parent',toolsframe,'width','auto', ...
     'Callback',...
 	'if ~exist(''sg'')|isempty(sg),sg=stochasticgridstim(''default'');end;[rr,dd,sr]=getscreentoolparams;if ~isempty(rr),sg=recenterstim(sg,{''rect'',rr,''screenrect'',sr,''params'',1});end;sg=stochasticgridstim(''graphical'',sg);if ~isempty(sg),SG=stimscript(1);SG=append(SG,sg);else, clear SG; end;UpdateNewStimEditors;',...
-    'move','right');
-
-censur = guicreate(button,'string','CentSurr','parent',toolsframe,'width','auto', ...
-    'Callback',...
-	'if ~exist(''css'')|isempty(css),css=centersurroundstim(''default'');end;[rr,dd,sr]=getscreentoolparams;if ~isempty(rr),cssp=getparameters(css);cssp.center=0.5*[rr(3)+rr(1) rr(2)+rr(4)];css=centersurroundstim(cssp);end;centersurrounds;',...
     'move','down');
 
 panelstxt = guicreate(txt,'string','Panels','parent',toolsframe,'width','auto', ...
     'move','right','left','left');
-
-lgnex = guicreate(button,'string','LGN','parent',toolsframe,'width','auto', ...
-    'Callback','lgnexperpanel','move','right');
-
-ctxex = guicreate(button,'string','Cortex','parent',toolsframe,'width','auto', ...
-    'Callback','ctxexperpanel','move','down');
 
 guicreate(button,'string','Quick analyse','parent',toolsframe,'width','auto', ...
     'Callback','runexpercallbk datapath;fsapu',...
@@ -302,7 +297,9 @@ data = struct('datapath',dp,'savedir',dpt,'analpath',ap,'runscript',rs, ...
 	'remotepath',rsd,'showstim',rss,'savestims',swvs, 'list_aq',aql,...
 	'add_aq',aqa,'edit_aq',aqe,'delete_aq',aqd,'open_aq',aqo,...,
 	'edtpixelspercm',edtpixelspercm,'edtviewingdistance',edtviewingdistance,...
-	'save_aq',aqs,'rslb',rslb,'rssb',rssb,'ctdwn',ctdwn,'tag','RunExperiment',...
+	'save_aq',aqs,'rslb',rslb,'rssb',rssb,'ctdwn',ctdwn,...
+    'from_acqready_cb',from_acqready_cb,...
+    'tag','RunExperiment',...
 	'cksds',[],'persistent',1);
 set(gcf,'UserData',data);
 
