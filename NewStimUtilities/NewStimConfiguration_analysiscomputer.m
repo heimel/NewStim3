@@ -68,7 +68,7 @@ Remote_Comm_remoteprefix = '\\vs03.herseninstituut.knaw.nl\VS03-CSF-1\Temp';
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 StimWindowGlobals;
-StimWindowMonitor = 0;  % use the given monitor, 0 is first
+StimWindowMonitor = 1;  % use the given monitor, 0 is first
 StimComputer = 1;       % is this a stimulus computer?
 StimDebug = true;      % do you want to show stimuli in 640x480 window, for an experimental computer change to false
 
