@@ -3,7 +3,9 @@ function NewStimInit
 %
 % 200X, Steve Van Hooser
 % 2009-2025, Alexander Heimel
- 
+
+disp('NewStimInit: Adding paths for NewStim3 and initializing globals.');
+
 pwd = fileparts(mfilename("fullpath"));
 
 addpath(pwd,...
