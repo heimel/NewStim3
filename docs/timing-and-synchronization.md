@@ -4,6 +4,10 @@
 
 For analysis, it is often crucial to match the time of the stimulus with the time of the acquired signal, beit spikes, LFP or behavioral data. This is generally accomplished by triggers sent out by the stimulus computer, just before the start of a trial or before every stimulus, but other solutions, such as triggering of the stimulus itself are also possible and implemented in NewStim. We first describe the most common setup here, which is the stimulus computer emitting a trigger and saving the times of the stimuli and the time of the trigger on the clock of the stimulus computer. Depending on NewStimConfiguration on the stimulus computer it is possible that also a trigger is send (on the same or different pin) at the start of each stimulus.
 
+![Timing of script and stimulus TTL triggers relative to the visual stimulus](assets/ttl-timing.png)
+
+The diagram shows the timing of script and stimulus TTL triggers relative to the visual stimulus, including the pre- and post-stimulus background periods.
+
 Commonly, stimuli are displayed in NewStim via the function DisplayStimScript( stimScript). If NSUseInitialSerialTrigger is true (set in the local NewStimConfiguration), this function will call
 
 ```matlab
