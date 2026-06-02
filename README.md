@@ -25,9 +25,6 @@ This package is dependent on [heimel/InVivoTools](https://github.com/heimel/InVi
 For information on showing visual stimuli, read the
 [NewStim and RunExperiment manual](docs/README.md).
 
-The previous Google Sites version remains available at
-<https://sites.google.com/site/alexanderheimel/protocols/manual-newstim-and-runexperiment>.
-
 ## Maintainer ##
 
 Maintainer: Alexander Heimel
